@@ -1,0 +1,46 @@
+1
+//<?php
+//get_template_part('partials/part', 'one');  подключение файлов(спецификация )
+//?>;
+
+1. Подключение CSS стилей - https://developer.wordpress.org/reference/functions/wp_enqueue_style/
+2. Регистрация CSS стилей - https://developer.wordpress.org/reference/functions/wp_register_style/
+3. Подключение JS - https://developer.wordpress.org/reference/functions/wp_enqueue_script/
+4. Регистрация JS скриптов - https://developer.wordpress.org/reference/functions/wp_register_script/
+
+1. Создание функции function name () {
+    wp_enqueue_style('geniuscorses-general', get_template_directory_uri() . '/assets/css/general.css', array(), '1.0', 'all')
+    wp_enqueue_script('geniuscorses-script', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', array( 'strategy' => 'defer')
+}
+add_action - Добавляет функцию обратного вызова в хук действия
+2.Добавление add_action(строка  $hook_name , вызываемый  $callback , int  $priority  =  10 , int  $accepted_args  =  1  )
+
+wp_enqueue_scripts() - Позволяет плагинам ставить сценарии в очередь для внешнего интерфейса с помощью wp_enqueue_script() .
+add_action('wp_enqueue_scripts' , 'name')
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+wp_enqueue_style -  Добавляет в очередь таблицу стилей CSS.
+ wp_enqueue_style(1.'geniuscourses-general'(имя должно быть уникальным,если подключаем библотиек то без названия проекта
+ 2. get_template_directory_uri() . 'assets/css/general.css' прописываем через конкатпнацию 
+ )3.array() - массив задающий таблицы стилей, 4. (1.0) - Строка, определяющая номер версии таблицы стилей, если она есть, которая добавляется к URL-адресу в качестве строки запроса для целей очистки кеша 
+ 5. media - all По умолчанию 'all'. Принимает типы мультимедиа 'all', такие как 'print'и 'screen', или медиа-запросы, такие как «(ориентация: портрет)»)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ wp_enqueue_script Ставит скрипт в очередь.( строка  $handle , строка  $src  =  » , строка[]  $deps  =  array(jquery) , строка|bool|null  $ver  =  1.0 , array('jquery') , $args  =  array( 'strategy' => 'defer')  )
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ругистрация стилей все тоде самое как и wp_enqueue_style
+wp_register_style('geniuscorses-general', get_template_directory_uri() . '/assets/css/general.css', array(), '1.0', 'all')
+wp_register_script('geniuscorses-script', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', array( 'strategy' => 'defer'))
+а затем нужно вызывать функиию  
+wp_enqueue_style('geniuscorses-general')
+wp_enqueue_style('geniuscorses-script')
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+мы можем проверять внутри функции 
+делать проверку внутри функции if(is_singular) {
+    is_singular - если мы находимся на открытой странице то подгружаем наши скрипт 
+    if(is_singular) {
+         wp_enqueue_script('geniuscorses-script', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', array( 'strategy' => 'defer')
+    }
+}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+чтобы поюлючить уже внутрнние бибилотеки WP, НЕОБХОДИМО зайти на документацию  wp_enqueue_script
+и выбрать необходимую нам библиотеку к примеру wp_enqueue_script('thickbox');
